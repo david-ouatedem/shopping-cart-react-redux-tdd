@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
 
-describe("testing cart actions", () => {
-  test("add item to cart", () => {
-    expect(true).toBeTruthy();
-  });
-});
+describe("test cart actions", () => {
+  test("should add product to cart",()=>{
+    expect(true).toBe(true)
+  })
+})

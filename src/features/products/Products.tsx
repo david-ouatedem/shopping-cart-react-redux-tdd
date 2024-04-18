@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getProducts, Product } from "../../app/api";
 import styles from "./Products.module.css";
 
 export function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    getProducts().then((products) => {
-      setProducts(products);
-    });
-  }, []);
   return (
     <main className="page">
       <ul className={styles.products}>
-        {products.map((product) => (
+        {(products ?? []).map((product) => (
           <li key={product.id}>
             <article className={styles.product}>
               <figure>
