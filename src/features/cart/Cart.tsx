@@ -1,7 +1,13 @@
-import React from "react";
 import styles from "./Cart.module.css";
+import { getTotalPrice, selectCartItems } from "./cart.slice";
+import { useAppSelector } from "../../app/store";
+import { selectProducts } from "../products/products.slice";
 
 export function Cart() {
+  // const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectCartItems);
+  const products = useAppSelector(selectProducts);
+  const totalCartPrice = useAppSelector(getTotalPrice);
   return (
     <main className="page">
       <h1>Shopping Cart</h1>
@@ -15,36 +21,34 @@ export function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Magnifying Glass</td>
-            <td>
-              <input type="text" className={styles.input} defaultValue={21} />
-            </td>
-            <td>$44.44</td>
-            <td>
-              <button aria-label="Remove Magnifying Glass from Shopping Cart">
-                X
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Football Cleats</td>
-            <td>
-              <input type="text" className={styles.input} defaultValue={17} />
-            </td>
-            <td>$25.99</td>
-            <td>
-              <button aria-label="Remove Football Cleats from Shopping Cart">
-                X
-              </button>
-            </td>
-          </tr>
+          {cartItems.map((item: { productId: string; quantity: number }) => {
+            const product = products.find((p) => p.id === item.productId);
+            const total = item.quantity * product!.price;
+            return (
+              <tr key={item.productId}>
+                <td>{product?.name}</td>
+                <td>
+                  <input
+                    type="text"
+                    className={styles.input}
+                    defaultValue={item.quantity}
+                  />
+                </td>
+                <td>${total.toFixed(2)}</td>
+                <td>
+                  <button aria-label="Remove Magnifying Glass from Shopping Cart">
+                    X
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
         <tfoot>
           <tr>
             <td>Total</td>
             <td></td>
-            <td className={styles.total}>${0.0}</td>
+            <td className={styles.total}>${totalCartPrice}</td>
             <td></td>
           </tr>
         </tfoot>

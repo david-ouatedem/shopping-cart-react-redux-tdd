@@ -17,7 +17,7 @@ type ProductsState = {
   }[];
 };
 
-export const getProducts = createAsyncThunk("cart/add", async () => {
+export const getProducts = createAsyncThunk("cart/add", () => {
   return [
     {
       id: "207",

@@ -68,7 +68,6 @@ function thenReceivedProducts(
   }[]
 ) {
   const products = store.getState().productsReducer.products;
-  console.log(products);
 
   expect(products).toEqual(expectedProducts);
 }
