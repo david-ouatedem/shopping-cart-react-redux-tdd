@@ -1,15 +1,6 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/store";
 import styles from "./Products.module.css";
-import { getProducts, selectProducts } from "./products.slice";
-import { addItem } from "../cart/cart.slice";
 
 export function Products() {
-  const dispatch = useAppDispatch();
-  const products = useAppSelector(selectProducts);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
   return (
     <main className="page">
       <ul className={styles.products}>

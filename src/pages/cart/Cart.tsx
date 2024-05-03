@@ -1,13 +1,6 @@
 import styles from "./Cart.module.css";
-import { getTotalPrice, selectCartItems } from "./cart.slice";
-import { useAppSelector } from "../../app/store";
-import { selectProducts } from "../products/products.slice";
 
 export function Cart() {
-  // const dispatch = useAppDispatch();
-  const cartItems = useAppSelector(selectCartItems);
-  const products = useAppSelector(selectProducts);
-  const totalCartPrice = useAppSelector(getTotalPrice);
   return (
     <main className="page">
       <h1>Shopping Cart</h1>

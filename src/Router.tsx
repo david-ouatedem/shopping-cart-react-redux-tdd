@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Home from "./pages/Home";
-import { Products } from "./features/products/Products";
-import { Cart } from "./features/cart/Cart";
+import Home from "./pages/home/Home.tsx";
+import { Products } from "./pages/products/Products.tsx";
+import { Cart } from "./pages/cart/Cart.tsx";
 
 export const router = createBrowserRouter([
   {
