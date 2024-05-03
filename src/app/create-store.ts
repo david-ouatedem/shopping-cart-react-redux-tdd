@@ -28,15 +28,10 @@ export const createStore = (
 }
 
 export const creatTestStore = (
-    initialState: RootState,
     productsGatewayHttp =  new ProductsGatewayHttp()
-) => {
-    const store = createStore({
-        productsGatewayHttp
-    })
-    store.getState = () => initialState;
-    return store;
-}
+) => createStore({
+    productsGatewayHttp
+})
 
 export type AppStore = ReturnType<typeof createStore>
 export type RootState = ReturnType<typeof rootReducer>

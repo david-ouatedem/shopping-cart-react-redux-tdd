@@ -33,9 +33,7 @@ describe("feature: get all available products", () => {
 let store: AppStore;
 
 function givenExampleProduct (product: Product) {
-    const testStore = creatTestStore({
 
-    })
 }
 
 async function whenGettingProducts () {
