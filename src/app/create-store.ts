@@ -2,6 +2,7 @@ import {Action, configureStore, createListenerMiddleware, ThunkDispatch} from "@
 import {ProductsGateway} from "../features/products/Products.gateway.ts";
 import {productsSlice} from "../features/products/products.slice.ts";
 import { FakeProductsGateway } from "../features/products/fakeProductsGateway.ts";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export type Dependencies = {
     productsGatewayHttp: ProductsGateway
@@ -35,3 +36,4 @@ export const creatTestStore = ({
 export type AppStore = ReturnType<typeof createStore>
 export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = ThunkDispatch<RootState, Dependencies, Action>
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
