@@ -1,5 +1,5 @@
 import {ProductsGateway} from "./Products.gateway.ts";
-import {Product} from "./product.model.ts";
+import {Product} from "./product.entity.ts";
 
 export class ProductsGatewayHttp implements ProductsGateway {
     async getAll(): Promise<Product[]> {
@@ -8,9 +8,7 @@ export class ProductsGatewayHttp implements ProductsGateway {
            if (!response.ok){
                throw new Error("something wrong happened when getting products")
            }
-           const products = await response.json()
-           console.log(products)
-           return  products
+           return  await response.json()
        }catch (e){
            console.error(e)
            throw e

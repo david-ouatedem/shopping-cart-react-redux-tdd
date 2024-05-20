@@ -1,7 +1,7 @@
 import {Action, configureStore, createListenerMiddleware, ThunkDispatch} from "@reduxjs/toolkit";
 import {ProductsGateway} from "../features/products/Products.gateway.ts";
-import {ProductsGatewayHttp} from "../features/products/productsGatewayHttp.ts";
 import {productsSlice} from "../features/products/products.slice.ts";
+import { FakeProductsGateway } from "../features/products/fakeProductsGateway.ts";
 
 export type Dependencies = {
     productsGatewayHttp: ProductsGateway
@@ -9,27 +9,26 @@ export type Dependencies = {
 export const listenerMiddleware = createListenerMiddleware();
 
 const rootReducer = productsSlice.reducer
+
 export const createStore = (
     dependencies: Dependencies
-) => {
-    const store = configureStore({
+) => configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware({
                 thunk: {
                     extraArgument: dependencies
                 }
-            }).prepend(listenerMiddleware.middleware)
+            })
         }
-    })
-    return{
-        ...store
-    }
-}
+    });
 
-export const creatTestStore = (
-    productsGatewayHttp =  new ProductsGatewayHttp()
-) => createStore({
+
+
+
+export const creatTestStore = ({
+    productsGatewayHttp = new FakeProductsGateway()
+    }: Partial<Dependencies> = {}) => createStore({
     productsGatewayHttp
 })
 

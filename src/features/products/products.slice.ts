@@ -9,11 +9,15 @@ export const productsSlice = createSlice({
     initialState: productsEntityAdapter.getInitialState(),
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getProducts.fulfilled,(state, action) => {
-            productsEntityAdapter.addMany(state,action.payload)
+        builder.addCase(getProducts.fulfilled, (state, action) => {
+            const products = action.payload
+            console.log(action)
+            if(!products) return
+            productsEntityAdapter.addMany(state, products)
         })
     }
 })
 
 export const selectProducts = (state: RootState) =>
     productsEntityAdapter.getSelectors().selectAll(state)
+

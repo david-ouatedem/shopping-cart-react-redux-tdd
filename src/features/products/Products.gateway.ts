@@ -1,4 +1,4 @@
-import {Product} from "./product.model.ts";
+import { Product } from "./product.entity";
 
 export interface ProductsGateway {
     getAll: ()=>Promise<Product[]>
