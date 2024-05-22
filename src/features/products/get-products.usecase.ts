@@ -4,10 +4,7 @@ export const getProducts = createAppAsyncThunk(
     'products/get-all',
     async (_,{extra: {productsGatewayHttp},rejectWithValue}) => {
         try{
-            const products = await productsGatewayHttp.getAll()
-            console.log(products)
-            
-            return products
+            return await productsGatewayHttp.getAll()
         }catch(error){
             return rejectWithValue(error)
         }

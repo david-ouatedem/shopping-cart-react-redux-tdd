@@ -9,7 +9,6 @@ export enum HomeViewModel {
 export const selectProductsViewModel = (rootState: RootState) => {
     const products = selectProducts(rootState);
     console.log(products)
-
     if (!products) {
         return {
             type: HomeViewModel.NO_PRODUCTS

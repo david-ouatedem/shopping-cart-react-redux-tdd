@@ -11,8 +11,6 @@ export const productsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
             const products = action.payload
-            console.log(action)
-            if(!products) return
             productsEntityAdapter.addMany(state, products)
         })
     }
