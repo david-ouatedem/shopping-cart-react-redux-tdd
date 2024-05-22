@@ -8,5 +8,3 @@ export class FakeProductsGateway implements ProductsGateway {
     }
 
 }
-
-export const fakeProductsGateway = new FakeProductsGateway();

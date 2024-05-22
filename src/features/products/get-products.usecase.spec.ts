@@ -3,7 +3,7 @@ import {Product} from "./product.entity.ts";
 import {creatTestStore} from "../../app/create-store.ts";
 import {getProducts} from "./get-products.usecase.ts";
 import {selectProducts} from "./products.slice.ts";
-import {fakeProductsGateway} from "./fakeProductsGateway.ts";
+import {FakeProductsGateway} from "./fakeProductsGateway.ts";
 
 describe("feature: get all available products", () => {
     test("example: should get product headphones by product id", async ()=> {
@@ -32,7 +32,10 @@ describe("feature: get all available products", () => {
         })
     })
 })
-const store = creatTestStore();  
+const fakeProductsGateway = new FakeProductsGateway()
+const store = creatTestStore({
+    productsGatewayHttp: fakeProductsGateway
+});  
 
 
 function givenExampleProduct (products: Product[]) {
@@ -43,7 +46,7 @@ async function whenGettingProducts () {
     await store.dispatch(getProducts())
 }
 
-function thenProductShouldBe (expectedProduct:Product) {
+function thenProductShouldBe(expectedProduct:Product) {
     const products = selectProducts(store.getState()); 
     expect(products[0]).toEqual(expectedProduct)
 }

@@ -4,7 +4,7 @@ import {HomeViewModel, selectProductsViewModel} from "./products.ViewModel.ts";
 
 describe("products view model", () => {
     test("products does not exist", () => {
-        const store = creatTestStore();
+        const store = creatTestStore({});
 
         const productsViewModel = selectProductsViewModel(store.getState())
 

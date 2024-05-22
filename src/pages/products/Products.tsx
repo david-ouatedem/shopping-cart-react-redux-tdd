@@ -11,7 +11,7 @@ export function Products() {
 
     useEffect(() => {
         dispatch(getProducts())
-    }, []);
+    }, [dispatch]);
   return (
     <main className="page">
       <ul className={styles.products}>
