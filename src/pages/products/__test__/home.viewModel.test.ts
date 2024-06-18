@@ -1,15 +1,15 @@
 import {describe, expect, test} from "vitest";
-import {HomeViewModel, selectProductsViewModel} from "./products.ViewModel.ts";
-import {getProducts} from "../../features/products/get-products.usecase.ts";
-import {Product} from "../../features/products/product.entity.ts";
-import {stateBuilder} from "../../app/state-builder.ts";
-import {creatTestStore} from "../../app/create-store.ts";
-import {FakeProductsGateway} from "../../features/products/fakeProductsGateway.ts";
+import {HomeViewModel, selectProductsViewModel} from "../view-model/products.ViewModel.ts";
+import {getProducts} from "../../../features/products/usecase/get-all-products.usecase.ts";
+import {Product} from "../../../features/products/model/product.entity.ts";
+import {stateBuilder} from "../../../app/state-builder.ts";
+import {creatTestStore} from "../../../app/create-store.ts";
+import {FakeProductsGatewayHttp} from "../../../features/products/infrastructure/fake-products-gateway-http.ts";
 
 describe("products view model", () => {
 
     test("fetching products failed", async () => {
-        const productsGatewayHttp = new FakeProductsGateway()
+        const productsGatewayHttp = new FakeProductsGatewayHttp()
         productsGatewayHttp.returnedResponse = {
             status: false,
             products: []
@@ -22,7 +22,7 @@ describe("products view model", () => {
     })
 
     test("products are empty", async () => {
-        const productsGatewayHttp = new FakeProductsGateway()
+        const productsGatewayHttp = new FakeProductsGatewayHttp()
         productsGatewayHttp.returnedResponse = {
             status: true,
             products: []

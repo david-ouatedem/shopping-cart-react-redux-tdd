@@ -1,4 +1,4 @@
-import {Product, productsEntityAdapter} from "../features/products/product.entity.ts";
+import {Product, productsEntityAdapter} from "../features/products/model/product.entity.ts";
 import {RootState} from "./create-store.ts";
 import {rootReducer} from "./root-reducer.ts";
 import {createAction, createReducer, UnknownAction} from "@reduxjs/toolkit";

@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { Provider } from "react-redux";
 import { createStore } from "./app/create-store.ts";
-import {ProductsGatewayHttp} from "./features/products/productsGatewayHttp.ts";
+import {ProductsGatewayHttp} from "./features/products/infrastructure/productsGatewayHttp.ts";
 
 const domNode = document.getElementById("root");
 const root = createRoot(domNode!);

@@ -1,7 +1,7 @@
 import {Action, configureStore, ThunkDispatch} from "@reduxjs/toolkit";
-import {ProductsGateway} from "../features/products/Products.gateway.ts";
+import {ProductsGateway} from "../features/products/model/Products.gateway.ts";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
-import {FakeProductsGateway} from "../features/products/fakeProductsGateway.ts";
+import {FakeProductsGatewayHttp} from "../features/products/infrastructure/fake-products-gateway-http.ts";
 import {rootReducer} from "./root-reducer.ts";
 
 export type Dependencies = {
@@ -26,7 +26,7 @@ export const createStore = (
 
 
 export const creatTestStore = ({
-                                   productsGatewayHttp = new FakeProductsGateway()
+                                   productsGatewayHttp = new FakeProductsGatewayHttp()
                                }: Partial<Dependencies> = {}, preloadedState?: Partial<RootState>) => createStore(
     {
         productsGatewayHttp

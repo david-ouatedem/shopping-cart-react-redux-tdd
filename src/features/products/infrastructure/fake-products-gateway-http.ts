@@ -1,6 +1,6 @@
-import {GetAllProductsResponse, ProductsGateway} from "./Products.gateway.ts";
+import {GetAllProductsResponse, ProductsGateway} from "../model/Products.gateway.ts";
 
-export class FakeProductsGateway implements ProductsGateway {
+export class FakeProductsGatewayHttp implements ProductsGateway {
     returnedResponse: GetAllProductsResponse = {
         status: true,
         products: [

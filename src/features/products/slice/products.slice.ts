@@ -1,7 +1,7 @@
 import {createSelector, createSlice} from "@reduxjs/toolkit";
-import {getProducts} from "./get-products.usecase.ts";
-import {RootState} from "../../app/create-store.ts";
-import {productsEntityAdapter} from "./product.entity.ts";
+import {getProducts} from "../usecase/get-all-products.usecase.ts";
+import {RootState} from "../../../app/create-store.ts";
+import {productsEntityAdapter} from "../model/product.entity.ts";
 
 
 export const productsSlice = createSlice({

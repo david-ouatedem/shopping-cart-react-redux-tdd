@@ -1,4 +1,4 @@
-import {GetAllProductsResponse, ProductsGateway} from "./Products.gateway.ts";
+import {GetAllProductsResponse, ProductsGateway} from "../model/Products.gateway.ts";
 
 export class ProductsGatewayHttp implements ProductsGateway {
     async getAll(): Promise<GetAllProductsResponse> {

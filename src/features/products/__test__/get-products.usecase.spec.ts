@@ -1,9 +1,9 @@
 import {describe, expect, test} from "vitest";
-import {Product} from "./product.entity.ts";
-import {creatTestStore} from "../../app/create-store.ts";
-import {getProducts} from "./get-products.usecase.ts";
-import {selectProducts} from "./products.slice.ts";
-import {stateBuilder} from "../../app/state-builder.ts";
+import {Product} from "../model/product.entity.ts";
+import {creatTestStore} from "../../../app/create-store.ts";
+import {getProducts} from "../usecase/get-all-products.usecase.ts";
+import {selectProducts} from "../slice/products.slice.ts";
+import {stateBuilder} from "../../../app/state-builder.ts";
 
 describe("feature: get all available products", () => {
     test("example: should get product headphones by product id", async ()=> {

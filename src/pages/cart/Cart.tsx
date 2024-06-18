@@ -1,6 +1,8 @@
 import styles from "./Cart.module.css";
 
 export function Cart() {
+  const cartItems = []
+  const totalCartPrice = 0
   return (
     <main className="page">
       <h1>Shopping Cart</h1>
