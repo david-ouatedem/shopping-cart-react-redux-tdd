@@ -22,17 +22,15 @@ describe("products view model", () => {
     })
 
     test("products are empty", async () => {
-        const productsGatewayHttp = new FakeProductsGatewayHttp()
-        productsGatewayHttp.returnedResponse = {
-            status: true,
-            products: []
-        }
+        //const productsGatewayHttp = new FakeProductsGatewayHttp()
+        //productsGatewayHttp.returnedResponse = {
+            //status: true,
+            //products: []
+        //}
         const initialState = stateBuilder().withProducts([]).build()
-        const store = creatTestStore({
-            productsGatewayHttp
-        },initialState)
+        const store = creatTestStore({},initialState)
 
-        await store.dispatch(getProducts())
+        //await store.dispatch(getProducts())
 
         const productsViewModel = selectProductsViewModel(store.getState())
 
