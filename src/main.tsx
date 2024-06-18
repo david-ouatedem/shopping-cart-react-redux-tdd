@@ -16,7 +16,7 @@ const store = createStore({
 root.render(
   <React.StrictMode>
     <Provider store={store}> 
-      <RouterProvider router={router} />
+      <RouterProvider router={router(store)} />
     </Provider>
   </React.StrictMode>
 );

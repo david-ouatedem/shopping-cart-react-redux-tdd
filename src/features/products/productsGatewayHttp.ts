@@ -1,14 +1,17 @@
-import {ProductsGateway} from "./Products.gateway.ts";
-import {Product} from "./product.entity.ts";
+import {GetAllProductsResponse, ProductsGateway} from "./Products.gateway.ts";
 
 export class ProductsGatewayHttp implements ProductsGateway {
-    async getAll(): Promise<Product[]> {
+    async getAll(): Promise<GetAllProductsResponse> {
        try {
            const response = await fetch("/products.json")
            if (!response.ok){
                throw new Error("something wrong happened when getting products")
            }
-           return  await response.json()
+           const result = await response.json()
+           return  {
+               status: response.ok,
+               products: result
+           }
        }catch (e){
            console.error(e)
            throw e

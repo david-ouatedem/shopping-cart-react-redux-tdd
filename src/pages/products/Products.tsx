@@ -1,17 +1,10 @@
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/create-store";
 import { selectProducts } from "../../features/products/products.slice";
 import styles from "./Products.module.css";
-import { useEffect } from "react";
-import { getProducts } from "../../features/products/get-products.usecase";
 
 export function Products() {
   const products = useAppSelector(selectProducts)
-  const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getProducts())
-    }, [dispatch]);
   return (
     <main className="page">
       <ul className={styles.products}>

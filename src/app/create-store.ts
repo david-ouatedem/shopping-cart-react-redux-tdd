@@ -1,35 +1,37 @@
-import {Action, configureStore, createListenerMiddleware, ThunkDispatch} from "@reduxjs/toolkit";
+import {Action, configureStore, ThunkDispatch} from "@reduxjs/toolkit";
 import {ProductsGateway} from "../features/products/Products.gateway.ts";
-import {productsSlice} from "../features/products/products.slice.ts";
-import { TypedUseSelectorHook, useSelector } from "react-redux";
+import {TypedUseSelectorHook, useSelector} from "react-redux";
+import {FakeProductsGateway} from "../features/products/fakeProductsGateway.ts";
+import {rootReducer} from "./root-reducer.ts";
 
 export type Dependencies = {
     productsGatewayHttp: ProductsGateway
 }
-export const listenerMiddleware = createListenerMiddleware();
 
-const rootReducer = productsSlice.reducer
 
 export const createStore = (
-    dependencies: Dependencies
+    dependencies: Dependencies,
+    preloadedState?: Partial<RootState>
 ) => configureStore({
-        reducer: rootReducer,
-        middleware: (getDefaultMiddleware) => {
-            return getDefaultMiddleware({
-                thunk: {
-                    extraArgument: dependencies
-                }
-            })
-        }
-    });
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware({
+            thunk: {
+                extraArgument: dependencies
+            },
+        })
+    },
+    preloadedState
+});
 
 
-
-
-export const creatTestStore = ({productsGatewayHttp}:Partial<Dependencies>) => createStore(
+export const creatTestStore = ({
+                                   productsGatewayHttp = new FakeProductsGateway()
+                               }: Partial<Dependencies> = {}, preloadedState?: Partial<RootState>) => createStore(
     {
         productsGatewayHttp
-    }
+    },
+    preloadedState
 )
 
 export type AppStore = ReturnType<typeof createStore>

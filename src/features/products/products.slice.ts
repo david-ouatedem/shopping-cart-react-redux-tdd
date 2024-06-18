@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSelector, createSlice} from "@reduxjs/toolkit";
 import {getProducts} from "./get-products.usecase.ts";
 import {RootState} from "../../app/create-store.ts";
 import {productsEntityAdapter} from "./product.entity.ts";
@@ -10,12 +10,18 @@ export const productsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
-            const products = action.payload
+            const products = action.payload.products
             productsEntityAdapter.addMany(state, products)
         })
     }
 })
 
-export const selectProducts = (state: RootState) =>
-    productsEntityAdapter.getSelectors().selectAll(state)
+const allProducts = (state: RootState) =>
+    productsEntityAdapter.getSelectors().selectAll(state.productsReducer)
 
+export const selectProducts = createSelector(
+    [allProducts],
+    (products) => {
+        return products
+    }
+)
