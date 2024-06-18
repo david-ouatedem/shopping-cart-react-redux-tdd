@@ -8,7 +8,7 @@ import {FakeProductsGatewayHttp} from "../../../features/products/infrastructure
 
 describe("products view model", () => {
 
-    test("fetching products failed", async () => {
+    test("can fetch products", async () => {
         const productsGatewayHttp = new FakeProductsGatewayHttp()
         productsGatewayHttp.returnedResponse = {
             status: false,
@@ -16,9 +16,9 @@ describe("products view model", () => {
         }
         const store = creatTestStore()
 
-        await store.dispatch(getProducts())
+        const response = await store.dispatch(getProducts())
 
-        expect(productsGatewayHttp.returnedResponse.status).toEqual(false)
+        expect(responses.status).toEqual(true)
     })
 
     test("products are empty", async () => {
