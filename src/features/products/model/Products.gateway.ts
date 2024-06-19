@@ -1,8 +1,8 @@
-import { Product } from "./product.entity.ts";
+import { ProductEntity } from "./product.entity.ts";
 
 export type GetAllProductsResponse = {
     status: boolean
-    products: Product[]
+    products: ProductEntity[]
 }
 
 export interface ProductsGateway {

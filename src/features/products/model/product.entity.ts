@@ -1,6 +1,6 @@
 import {createEntityAdapter} from "@reduxjs/toolkit";
 
-export interface Product {
+export interface ProductEntity {
     id: string;
     name: string;
     price: number;
@@ -10,4 +10,4 @@ export interface Product {
     imageCredit: string;
 }
 
-export const productsEntityAdapter = createEntityAdapter<Product>();
+export const productsEntityAdapter = createEntityAdapter<ProductEntity>();

@@ -1,6 +1,6 @@
 import {RootState} from "../../../app/create-store.ts";
 import {selectProducts} from "../../../features/products/slice/products.slice.ts";
-import {Product} from "../../../features/products/model/product.entity.ts";
+import {ProductEntity} from "../../../features/products/model/product.entity.ts";
 
 export enum HomeViewModel {
     EMPTY_PRODUCTS= "EMPTY_PRODUCTS",
@@ -13,7 +13,7 @@ export type HomeViewModelType =
     } |
     {
         type: HomeViewModel.PRODUCTS_EXIST,
-        products: Product[]
+        products: ProductEntity[]
     }
 export const selectProductsViewModel = (rootState: RootState): HomeViewModelType => {
     const products = selectProducts(rootState);

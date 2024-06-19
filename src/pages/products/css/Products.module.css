@@ -30,3 +30,7 @@
 .caption {
   font-size: 0.6em;
 }
+.center {
+  text-align: center;
+  margin-top: 5rem;
+}

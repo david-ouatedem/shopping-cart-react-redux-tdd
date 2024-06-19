@@ -1,13 +1,15 @@
-import {describe, expect, test} from "vitest";
-import {Product} from "../model/product.entity.ts";
-import {creatTestStore} from "../../../app/create-store.ts";
-import {getProducts} from "../usecase/get-all-products.usecase.ts";
-import {selectProducts} from "../slice/products.slice.ts";
-import {stateBuilder} from "../../../app/state-builder.ts";
+import {beforeEach, describe, test} from "vitest";
+import {createProductsFixture, ProductsFixture} from "./products.fixture.ts";
 
-describe("feature: get all available products", () => {
-    test("example: should get product headphones by product id", async ()=> {
-        givenExampleProduct([
+describe("Feature: get all available products", () => {
+    let fixture: ProductsFixture;
+
+    beforeEach(() => {
+        fixture = createProductsFixture()
+    });
+
+    test("Example: getting product headphones", async ()=> {
+        fixture.givenExampleProduct([
             {
                 id: "300",
                 description: "Look cool while blocking out the rest of the world.",
@@ -19,9 +21,9 @@ describe("feature: get all available products", () => {
             }
         ])
 
-        await whenGettingProducts()
+        await fixture.whenGettingProducts()
 
-        thenProductShouldBe({
+        fixture.thenProductShouldBe({
             id: "300",
             description: "Look cool while blocking out the rest of the world.",
             imageAlt: "Cool looking headphones in gray and black",
@@ -32,21 +34,3 @@ describe("feature: get all available products", () => {
         })
     })
 })
-const store = creatTestStore();
-
-
-function givenExampleProduct (products: Product[]) {
-    const initialState = stateBuilder()
-        .withProducts(products).build()
-
-    return initialState
-}
-
-async function whenGettingProducts () {
-    await store.dispatch(getProducts())
-}
-
-function thenProductShouldBe(expectedProduct:Product) {
-    const products = selectProducts({productsReducer: store.getState().productsReducer});
-    expect(products[0]).toEqual(expectedProduct)
-}

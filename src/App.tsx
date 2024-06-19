@@ -1,4 +1,3 @@
-import React from "react";
 import { CartLink } from "./pages/cart/components/CartLink.tsx";
 import styles from "./App.module.css";
 import { Link, Outlet } from "react-router-dom";

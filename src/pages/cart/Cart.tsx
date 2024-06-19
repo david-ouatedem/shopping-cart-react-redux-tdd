@@ -1,8 +1,12 @@
 import styles from "./Cart.module.css";
+import {useAppSelector} from "../../app/create-store.ts";
+import {removeProduct, selectCartItems, selectCartTotal} from "../../features/cart/slice/cart.slice.ts";
+import {useDispatch} from "react-redux";
 
 export function Cart() {
-  const cartItems = []
-  const totalCartPrice = 0
+  const dispatch = useDispatch()
+  const cartItems = useAppSelector(selectCartItems)
+  const totalCartPrice = useAppSelector(selectCartTotal)
   return (
     <main className="page">
       <h1>Shopping Cart</h1>
@@ -16,22 +20,30 @@ export function Cart() {
           </tr>
         </thead>
         <tbody>
-          {cartItems.map((item: { productId: string; quantity: number }) => {
-            const product = products.find((p) => p.id === item.productId);
-            const total = item.quantity * product!.price;
+          {cartItems.map((item) => {
+            const total = +(item.quantity * item.productUnitPrice).toFixed(2);
             return (
-              <tr key={item.productId}>
-                <td>{product?.name}</td>
+              <tr key={item.id}>
+                <td>{item.name}</td>
                 <td>
                   <input
                     type="text"
                     className={styles.input}
                     defaultValue={item.quantity}
+                    onChange={(event) => {
+                      return +event.target.value * item.productUnitPrice
+                    }}
                   />
                 </td>
-                <td>${total.toFixed(2)}</td>
+                <td>${total}</td>
                 <td>
-                  <button aria-label="Remove Magnifying Glass from Shopping Cart">
+                  <button onClick={() => {
+                    dispatch(removeProduct(
+                        {
+                          cartItemId: item.id
+                        }
+                    ))
+                  }} aria-label="Remove Magnifying Glass from Shopping Cart">
                     X
                   </button>
                 </td>

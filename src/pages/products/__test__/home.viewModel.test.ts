@@ -1,22 +1,12 @@
 import {describe, expect, test} from "vitest";
 import {HomeViewModel, selectProductsViewModel} from "../view-model/products.ViewModel.ts";
-import {getProducts} from "../../../features/products/usecase/get-all-products.usecase.ts";
-import {Product} from "../../../features/products/model/product.entity.ts";
+import {ProductEntity} from "../../../features/products/model/product.entity.ts";
 import {stateBuilder} from "../../../app/state-builder.ts";
 import {creatTestStore} from "../../../app/create-store.ts";
-import {GetAllProductsResponse} from "../../../features/products/model/Products.gateway.ts";
 
 describe("products view model", () => {
 
-    test("can fetch products", async () => {
-        const store = creatTestStore()
-
-        const response = await store.dispatch(getProducts())
-
-        expect((response.payload as GetAllProductsResponse).status).toEqual(true)
-    })
-
-    test("products are empty", async () => {
+    test("Example: there are no products in the store", async () => {
         const initialState = stateBuilder().withProducts([]).build()
         const store = creatTestStore({},initialState)
 
@@ -28,8 +18,8 @@ describe("products view model", () => {
         })
     })
 
-    test("there are products", async () => {
-        const products:Product[] = [
+    test("Example: there are products in the store", async () => {
+        const products:ProductEntity[] = [
             {
             id: "300",
             description: "Look cool while blocking out the rest of the world.",
@@ -41,8 +31,6 @@ describe("products view model", () => {
         }]
         const initialState = stateBuilder().withProducts(products).build()
         const store = creatTestStore({},initialState)
-
-        await store.dispatch(getProducts())
 
         const productsViewModel = selectProductsViewModel(store.getState())
 
