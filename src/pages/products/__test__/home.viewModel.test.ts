@@ -4,33 +4,21 @@ import {getProducts} from "../../../features/products/usecase/get-all-products.u
 import {Product} from "../../../features/products/model/product.entity.ts";
 import {stateBuilder} from "../../../app/state-builder.ts";
 import {creatTestStore} from "../../../app/create-store.ts";
-import {FakeProductsGatewayHttp} from "../../../features/products/infrastructure/fake-products-gateway-http.ts";
+import {GetAllProductsResponse} from "../../../features/products/model/Products.gateway.ts";
 
 describe("products view model", () => {
 
     test("can fetch products", async () => {
-        const productsGatewayHttp = new FakeProductsGatewayHttp()
-        productsGatewayHttp.returnedResponse = {
-            status: false,
-            products: []
-        }
         const store = creatTestStore()
 
         const response = await store.dispatch(getProducts())
 
-        expect(responses.status).toEqual(true)
+        expect((response.payload as GetAllProductsResponse).status).toEqual(true)
     })
 
     test("products are empty", async () => {
-        //const productsGatewayHttp = new FakeProductsGatewayHttp()
-        //productsGatewayHttp.returnedResponse = {
-            //status: true,
-            //products: []
-        //}
         const initialState = stateBuilder().withProducts([]).build()
         const store = creatTestStore({},initialState)
-
-        //await store.dispatch(getProducts())
 
         const productsViewModel = selectProductsViewModel(store.getState())
 
