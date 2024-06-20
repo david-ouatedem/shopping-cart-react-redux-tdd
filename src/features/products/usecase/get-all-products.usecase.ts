@@ -9,8 +9,8 @@ export const getProducts = createAppAsyncThunk(
                 return rejectWithValue("error when fetching products")
             }
             return response
-        }catch(error){
-            return rejectWithValue(error)
+        }catch(error: unknown){
+            return rejectWithValue((error as {message: string}).message || "An unknown error occurred")
         }
     }
 )
