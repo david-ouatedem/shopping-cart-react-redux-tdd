@@ -1,14 +1,27 @@
 import styles from "./Cart.module.css";
 import {useAppSelector} from "../../app/create-store.ts";
-import {removeProduct, selectCartItems, selectCartTotal} from "../../features/cart/slice/cart.slice.ts";
+import {removeProduct, selectCartItems} from "../../features/cart/slice/cart.slice.ts";
 import {useDispatch} from "react-redux";
+import {useState} from "react";
 
 export function Cart() {
     const dispatch = useDispatch()
-    const cartItems = useAppSelector(selectCartItems)
-    const totalCartPrice = useAppSelector(selectCartTotal)
-    // const [quantity, setQuantity] = useState<number>(1)
-    // const [total, setTotal] = useState<number>(0)
+    const initialCartItems = useAppSelector(selectCartItems)
+    const [cartItems, setCartItems] = useState(initialCartItems)
+
+
+    const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
+        const newQuantity = +event.target.value
+        setCartItems((prevCartItems) =>
+            prevCartItems.map((item) =>
+                item.id === id ? {...item, quantity: newQuantity} : item
+            )
+        )
+    }
+
+    const totalCartPrice = cartItems.reduce((total,item) => {
+        return total + (item.productUnitPrice * item.quantity)
+    },0).toFixed(2)
 
     return (
         <main className="page">
@@ -25,21 +38,15 @@ export function Cart() {
                 <tbody>
                 {cartItems.map((item) => {
                     const total = +(item.quantity * item.productUnitPrice).toFixed(2);
-                    // const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>) => {
-                    //     const newQuantity = +event.target.value
-                    //     const newTotal = +(newQuantity * item.productUnitPrice).toFixed(2)
-                    //     setQuantity(newQuantity)
-                    //     setTotal(newTotal)
-                    // }
                     return (
                         <tr key={item.id}>
                             <td>{item.name}</td>
                             <td>
                                 <input
-                                    type="text"
+                                    type="number"
                                     className={styles.input}
                                     value={item.quantity}
-                                    // onChange={(event) => handleChangeQuantity(event)}
+                                    onChange={(event) => handleChangeQuantity(event, item.id)}
                                 />
                             </td>
                             <td>${total}</td>
