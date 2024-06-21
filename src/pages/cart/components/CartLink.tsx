@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./CartLink.module.css";
+import styles from "../css/CartLink.module.css";
 import {useAppSelector} from "../../../app/create-store.ts";
 import {selectCartItems} from "../../../features/cart/slice/cart.slice.ts";
 

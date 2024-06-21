@@ -1,4 +1,4 @@
-import styles from "./Cart.module.css";
+import styles from "./css/Cart.module.css";
 import {useAppSelector} from "../../app/create-store.ts";
 import {removeProduct, selectCartItems} from "../../features/cart/slice/cart.slice.ts";
 import {useDispatch} from "react-redux";
@@ -57,6 +57,9 @@ export function Cart() {
                                             cartItemId: item.id
                                         }
                                     ))
+                                    setCartItems((prevState) => {
+                                        return prevState.filter(cartItem => item.id !== cartItem.id)
+                                    })
                                 }} aria-label="Remove Magnifying Glass from Shopping Cart">
                                     X
                                 </button>
