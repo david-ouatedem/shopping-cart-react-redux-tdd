@@ -3,43 +3,61 @@ import {cartEntityAdapter, CartItemEntity} from "../model/cart.entity.ts";
 import {RootState} from "../../../app/create-store.ts";
 
 type CartState = EntityState<CartItemEntity, string> & {
-    cartTotalPrice: number
+    cartTotalCost: number
 }
 const initialState: CartState = cartEntityAdapter.getInitialState({
-    cartTotalPrice: 0
+    cartTotalCost: 0
 })
 export const cartSlice = createSlice({
     name: "cart",
     reducers: {
-        addProduct(state, action: PayloadAction<CartItemEntity>) {
+        addCartItem(state, action: PayloadAction<CartItemEntity>) {
             const existingItem = state.entities[action.payload.id];
             if (existingItem){
                 existingItem.quantity += action.payload.quantity;
             }
             cartEntityAdapter.addOne(state, action.payload)
-            state.cartTotalPrice = Object.values(state.entities).reduce((total, item) => {
-                return total + (item.productUnitPrice) * (item.quantity)
+            state.cartTotalCost = Object.values(state.entities).reduce((total, item) => {
+                return total + (item.productUnitPrice * item.quantity)
             }, 0)
-            state.cartTotalPrice = +state.cartTotalPrice.toFixed(2)
+            state.cartTotalCost = +state.cartTotalCost.toFixed(2)
         },
-        removeProduct(state, action: PayloadAction<{ cartItemId: string }>) {
+        removeCartItem(state, action: PayloadAction<{ cartItemId: string }>) {
             const item = state.entities[action.payload.cartItemId];
             if (item) {
-                state.cartTotalPrice -= (item.productUnitPrice) * (item.quantity)
-                state.cartTotalPrice = Math.max(state.cartTotalPrice, 0);
-                state.cartTotalPrice = +state.cartTotalPrice.toFixed(2)
+                state.cartTotalCost -= (item.productUnitPrice * item.quantity)
+                state.cartTotalCost = Math.max(state.cartTotalCost, 0);
+                state.cartTotalCost = +state.cartTotalCost.toFixed(2)
                 cartEntityAdapter.removeOne(state, action.payload.cartItemId)
             }
+        },
+        updateCartItemQuantity(state, action: PayloadAction<{
+            updatedQuantity: string,
+            cartItemId: string
+        }>){
+            const newQuantity = +action.payload.updatedQuantity
+
+            cartEntityAdapter.updateOne(state,{
+                id: action.payload.cartItemId,
+                changes: {
+                    quantity: newQuantity
+                }
+            })
+            state.cartTotalCost = Object.values(state.entities).reduce((total, item) => {
+                return total + (item.productUnitPrice * item.quantity)
+            }, 0)
+            state.cartTotalCost = +state.cartTotalCost.toFixed(2)
         }
+
     },
     initialState
 })
 
-export const {addProduct, removeProduct} = cartSlice.actions
+export const {addCartItem, removeCartItem,updateCartItemQuantity} = cartSlice.actions
 
 
 export const selectCartItems = (state: RootState) =>
     cartEntityAdapter.getSelectors().selectAll(state.cartReducer)
 
-export const selectCartTotal = (state: RootState) =>
-    state.cartReducer.cartTotalPrice
+export const selectCartTotalCost = (state: RootState) =>
+    state.cartReducer.cartTotalCost

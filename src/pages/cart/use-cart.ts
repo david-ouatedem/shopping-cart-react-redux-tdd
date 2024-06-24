@@ -1,14 +1,18 @@
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../app/create-store.ts";
-import {removeProduct, selectCartItems} from "../../features/cart/slice/cart.slice.ts";
-import {useState} from "react";
+import {
+    removeCartItem,
+    selectCartItems,
+    selectCartTotalCost,
+    updateCartItemQuantity
+} from "../../features/cart/slice/cart.slice.ts";
 import {CartItemEntity} from "../../features/cart/model/cart.entity.ts";
 
 export interface CartBehaviour {
-    removeCartItem: (item: CartItemEntity) => void
+    handleRemoveCartItem: (item: CartItemEntity) => void
     total: (item: CartItemEntity) => number
-    totalCartPrice: number
-    handleChangeQuantity: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void
+    cartTotalCost: number
+    handleChangeQuantity: (event: React.ChangeEvent<HTMLInputElement>, cartItemId: string) => void
     cartItems: CartItemEntity[]
 }
 
@@ -16,41 +20,36 @@ export interface CartBehaviour {
 export const useCart = (): CartBehaviour => {
 
     const dispatch = useDispatch()
-    const initialCartItems = useAppSelector(selectCartItems)
-    const [cartItems, setCartItems] = useState(initialCartItems)
+    const cartItems = useAppSelector(selectCartItems)
+    const cartTotalCost = useAppSelector(selectCartTotalCost)
 
 
-    const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
-        const newQuantity = +event.target.value
-        setCartItems((prevCartItems) =>
-            prevCartItems.map((item) =>
-                item.id === id ? {...item, quantity: newQuantity} : item
-            )
-        )
+    const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, cartItemId: string) => {
+        dispatch(updateCartItemQuantity({
+            updatedQuantity: event.target.value,
+            cartItemId
+        }))
     }
 
     const total = (item: CartItemEntity) => {
     return +(item.quantity * item.productUnitPrice).toFixed(2);
     }
 
-    const totalCartPrice = +cartItems.reduce((total,item) => {
-        return total + (item.productUnitPrice * item.quantity)
-    },0).toFixed(2)
+    // const totalCartPrice = +cartItems.reduce((total,item) => {
+    //     return total + (item.productUnitPrice * item.quantity)
+    // },0).toFixed(2)
 
-    const removeCartItem = (item: CartItemEntity) => {
-        dispatch(removeProduct(
+    const handleRemoveCartItem = (item: CartItemEntity) => {
+        dispatch(removeCartItem(
             {
                 cartItemId: item.id
             }
         ))
-        setCartItems((prevState) => {
-            return prevState.filter(cartItem => item.id !== cartItem.id)
-        })
     }
 
     return{
-        removeCartItem,
-        totalCartPrice,
+        handleRemoveCartItem,
+        cartTotalCost,
         handleChangeQuantity,
         total,
         cartItems

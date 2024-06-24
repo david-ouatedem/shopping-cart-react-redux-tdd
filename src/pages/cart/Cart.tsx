@@ -2,9 +2,9 @@ import styles from "./css/Cart.module.css";
 import {useCart} from "./use-cart.ts";
 export function Cart() {
     const {
-        totalCartPrice,
+        cartTotalCost,
         handleChangeQuantity,
-        removeCartItem,
+        handleRemoveCartItem,
         total,
         cartItems
     } = useCart()
@@ -36,7 +36,7 @@ export function Cart() {
                             </td>
                             <td>${total(item)}</td>
                             <td>
-                                <button onClick={() => removeCartItem(item)} aria-label="Remove Magnifying Glass from Shopping Cart">
+                                <button onClick={() => handleRemoveCartItem(item)} aria-label="Remove Magnifying Glass from Shopping Cart">
                                     X
                                 </button>
                             </td>
@@ -48,7 +48,7 @@ export function Cart() {
                 <tr>
                     <td>Total</td>
                     <td></td>
-                    <td className={styles.total}>${totalCartPrice}</td>
+                    <td className={styles.total}>${cartTotalCost}</td>
                     <td></td>
                 </tr>
                 </tfoot>

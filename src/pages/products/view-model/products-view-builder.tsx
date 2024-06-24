@@ -2,7 +2,7 @@ import {useAppSelector} from "../../../app/create-store.ts";
 import {HomeViewModel, selectProductsViewModel} from "./products.ViewModel.ts";
 import styles from "../css/Products.module.css";
 import {useDispatch} from "react-redux";
-import {addProduct} from "../../../features/cart/slice/cart.slice.ts";
+import {addCartItem} from "../../../features/cart/slice/cart.slice.ts";
 
 const ProductsViewBuilder = () => {
     const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const ProductsViewBuilder = () => {
                                         <p>${product.price}</p>
                                         <button
                                             onClick={() => {
-                                                dispatch(addProduct({
+                                                dispatch(addCartItem({
                                                     id: product.id,
                                                     productUnitPrice: product.price,
                                                     name: product.name,
