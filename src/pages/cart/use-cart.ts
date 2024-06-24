@@ -7,6 +7,7 @@ import {
     updateCartItemQuantity
 } from "../../features/cart/slice/cart.slice.ts";
 import {CartItemEntity} from "../../features/cart/model/cart.entity.ts";
+import {useState} from "react";
 
 export interface CartBehaviour {
     handleRemoveCartItem: (item: CartItemEntity) => void
@@ -14,6 +15,10 @@ export interface CartBehaviour {
     cartTotalCost: number
     handleChangeQuantity: (event: React.ChangeEvent<HTMLInputElement>, cartItemId: string) => void
     cartItems: CartItemEntity[]
+    handleSubmit: () => void
+    checkoutModalIsOpen: boolean
+    handleOpenCheckout: () => void
+    handleCloseCheckout: () => void
 }
 
 
@@ -23,6 +28,17 @@ export const useCart = (): CartBehaviour => {
     const cartItems = useAppSelector(selectCartItems)
     const cartTotalCost = useAppSelector(selectCartTotalCost)
 
+
+    const [checkoutModalIsOpen, setCheckoutModalIsOpen] = useState(false)
+
+
+    const handleOpenCheckout = () => {
+        setCheckoutModalIsOpen(true)
+    }
+
+    const handleCloseCheckout = () => {
+        setCheckoutModalIsOpen(false)
+    }
 
     const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, cartItemId: string) => {
         dispatch(updateCartItemQuantity({
@@ -35,10 +51,6 @@ export const useCart = (): CartBehaviour => {
     return +(item.quantity * item.productUnitPrice).toFixed(2);
     }
 
-    // const totalCartPrice = +cartItems.reduce((total,item) => {
-    //     return total + (item.productUnitPrice * item.quantity)
-    // },0).toFixed(2)
-
     const handleRemoveCartItem = (item: CartItemEntity) => {
         dispatch(removeCartItem(
             {
@@ -47,11 +59,19 @@ export const useCart = (): CartBehaviour => {
         ))
     }
 
+    const handleSubmit = () => {
+
+    }
+
     return{
         handleRemoveCartItem,
         cartTotalCost,
         handleChangeQuantity,
         total,
-        cartItems
+        cartItems,
+        handleSubmit,
+        checkoutModalIsOpen,
+        handleOpenCheckout,
+        handleCloseCheckout
     }
 }

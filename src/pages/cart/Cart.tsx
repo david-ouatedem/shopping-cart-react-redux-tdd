@@ -1,12 +1,17 @@
 import styles from "./css/Cart.module.css";
 import {useCart} from "./use-cart.ts";
+
 export function Cart() {
     const {
         cartTotalCost,
         handleChangeQuantity,
         handleRemoveCartItem,
         total,
-        cartItems
+        cartItems,
+        handleOpenCheckout,
+        handleCloseCheckout,
+        handleSubmit,
+        checkoutModalIsOpen
     } = useCart()
     return (
         <main className="page">
@@ -36,7 +41,8 @@ export function Cart() {
                             </td>
                             <td>${total(item)}</td>
                             <td>
-                                <button onClick={() => handleRemoveCartItem(item)} aria-label="Remove Magnifying Glass from Shopping Cart">
+                                <button onClick={() => handleRemoveCartItem(item)}
+                                        aria-label="Remove Magnifying Glass from Shopping Cart">
                                     X
                                 </button>
                             </td>
@@ -53,11 +59,25 @@ export function Cart() {
                 </tr>
                 </tfoot>
             </table>
-            <form>
-                <button className={styles.button} type="submit">
-                    Checkout
-                </button>
+            <form onSubmit={(event)=>{
+                event.preventDefault()
+                handleSubmit()
+            }}>
+                <dialog open={checkoutModalIsOpen} id="mypopover">
+                    <p>Greetings, one and all!</p>
+                    <div className={styles.flexCenter}>
+                        <button onClick={handleCloseCheckout}>Cancel</button>
+                        <button>Checkout</button>
+                    </div>
+                </dialog>
             </form>
+            <button
+                className={styles.button}
+                type="button"
+                onClick={handleOpenCheckout}
+            >
+                Checkout
+            </button>
         </main>
     );
 }
