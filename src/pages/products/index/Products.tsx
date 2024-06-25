@@ -1,4 +1,4 @@
-import ProductsViewBuilder from "../view-model/products-view-builder.tsx";
+import ProductsViewBuilder from "./products-view-builder.tsx";
 
 export function Products() {
     return <ProductsViewBuilder />

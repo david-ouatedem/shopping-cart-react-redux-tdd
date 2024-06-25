@@ -1,5 +1,5 @@
 import {useAppSelector} from "../../../app/create-store.ts";
-import {HomeViewModel, selectProductsViewModel} from "./products.ViewModel.ts";
+import {HomeViewModel, selectProductsViewModel} from "../view-model/products.ViewModel.ts";
 import styles from "../css/Products.module.css";
 import {useDispatch} from "react-redux";
 import {addCartItem} from "../../../features/cart/slice/cart.slice.ts";

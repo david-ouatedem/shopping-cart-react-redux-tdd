@@ -1,17 +1,15 @@
-import styles from "./css/Cart.module.css";
+import styles from "../css/Cart.module.css";
 import {useCart} from "./use-cart.ts";
 
 export function Cart() {
     const {
-        cartTotalCost,
         handleChangeQuantity,
         handleRemoveCartItem,
-        total,
-        cartItems,
         handleOpenCheckout,
         handleCloseCheckout,
         handleSubmit,
-        checkoutModalIsOpen
+        checkoutModalIsOpen,
+        cartViewModel
     } = useCart()
     return (
         <main className="page">
@@ -26,7 +24,7 @@ export function Cart() {
                 </tr>
                 </thead>
                 <tbody>
-                {cartItems.map((item) => {
+                {cartViewModel.cartItems.map((item) => {
 
                     return (
                         <tr key={item.id}>
@@ -39,7 +37,7 @@ export function Cart() {
                                     onChange={(event) => handleChangeQuantity(event, item.id)}
                                 />
                             </td>
-                            <td>${total(item)}</td>
+                            <td>${cartViewModel.total(item)}</td>
                             <td>
                                 <button onClick={() => handleRemoveCartItem(item)}
                                         aria-label="Remove Magnifying Glass from Shopping Cart">
@@ -54,7 +52,7 @@ export function Cart() {
                 <tr>
                     <td>Total</td>
                     <td></td>
-                    <td className={styles.total}>${cartTotalCost}</td>
+                    <td className={styles.total}>${cartViewModel.cartTotalCost}</td>
                     <td></td>
                 </tr>
                 </tfoot>
