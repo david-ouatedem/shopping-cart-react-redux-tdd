@@ -3,8 +3,6 @@ import {useCart} from "./use-cart.ts";
 
 export function Cart() {
     const {
-        handleChangeQuantity,
-        handleRemoveCartItem,
         handleOpenCheckout,
         handleCloseCheckout,
         handleSubmit,
@@ -34,12 +32,14 @@ export function Cart() {
                                     type="number"
                                     className={styles.input}
                                     value={item.quantity}
-                                    onChange={(event) => handleChangeQuantity(event, item.id)}
+                                    onChange={(event) =>
+                                        cartViewModel.handleChangeQuantity(+event.target.value, item.id)
+                                }
                                 />
                             </td>
                             <td>${cartViewModel.total(item)}</td>
                             <td>
-                                <button onClick={() => handleRemoveCartItem(item)}
+                                <button onClick={() => cartViewModel.handleRemoveCartItem(item)}
                                         aria-label="Remove Magnifying Glass from Shopping Cart">
                                     X
                                 </button>

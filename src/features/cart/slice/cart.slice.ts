@@ -32,7 +32,7 @@ export const cartSlice = createSlice({
             }
         },
         updateCartItemQuantity(state, action: PayloadAction<{
-            updatedQuantity: string,
+            updatedQuantity: number,
             cartItemId: string
         }>){
             const newQuantity = +action.payload.updatedQuantity
