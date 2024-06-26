@@ -5,7 +5,6 @@ export function Cart() {
     const {
         handleOpenCheckout,
         handleCloseCheckout,
-        handleSubmit,
         checkoutModalIsOpen,
         cartViewModel
     } = useCart()
@@ -59,13 +58,14 @@ export function Cart() {
             </table>
             <form onSubmit={(event)=>{
                 event.preventDefault()
-                handleSubmit()
+                cartViewModel.handleSubmit()
             }}>
                 <dialog open={checkoutModalIsOpen} id="mypopover">
-                    <p>Greetings, one and all!</p>
+                    <p>The total cost of your cart amounts to</p>
+                    <p className={styles.total}>${cartViewModel.cartTotalCost}</p>
                     <div className={styles.flexCenter}>
-                        <button onClick={handleCloseCheckout}>Cancel</button>
-                        <button>Checkout</button>
+                        <button type="button" onClick={handleCloseCheckout}>Cancel</button>
+                        <button type="submit">Checkout</button>
                     </div>
                 </dialog>
             </form>

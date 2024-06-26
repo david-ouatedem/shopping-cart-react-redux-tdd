@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
     reducers: {
         addCartItem(state, action: PayloadAction<CartItemEntity>) {
             const existingItem = state.entities[action.payload.id];
-            if (existingItem){
+            if (existingItem) {
                 existingItem.quantity += action.payload.quantity;
             }
             cartEntityAdapter.addOne(state, action.payload)
@@ -34,10 +34,10 @@ export const cartSlice = createSlice({
         updateCartItemQuantity(state, action: PayloadAction<{
             updatedQuantity: number,
             cartItemId: string
-        }>){
+        }>) {
             const newQuantity = +action.payload.updatedQuantity
 
-            cartEntityAdapter.updateOne(state,{
+            cartEntityAdapter.updateOne(state, {
                 id: action.payload.cartItemId,
                 changes: {
                     quantity: newQuantity
@@ -47,13 +47,21 @@ export const cartSlice = createSlice({
                 return total + (item.productUnitPrice * item.quantity)
             }, 0)
             state.cartTotalCost = +state.cartTotalCost.toFixed(2)
-        }
-
+        },
+        clearCartItems(state) {
+            cartEntityAdapter.removeAll(state)
+            state.cartTotalCost = 0
+        },
     },
     initialState
 })
 
-export const {addCartItem, removeCartItem,updateCartItemQuantity} = cartSlice.actions
+export const {
+    addCartItem,
+    removeCartItem,
+    updateCartItemQuantity,
+    clearCartItems,
+} = cartSlice.actions
 
 
 export const selectCartItems = (state: RootState) =>

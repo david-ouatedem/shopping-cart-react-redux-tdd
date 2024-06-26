@@ -4,8 +4,6 @@ import {useState} from "react";
 import {CartViewModelType, createCartViewModel} from "../view-model/cart.viewModel.ts";
 
 export interface CartBehaviour {
-    // handleChangeQuantity: (event: React.ChangeEvent<HTMLInputElement>, cartItemId: string) => void
-    handleSubmit: () => void
     checkoutModalIsOpen: boolean
     handleOpenCheckout: () => void
     handleCloseCheckout: () => void
@@ -30,20 +28,7 @@ export const useCart = (): CartBehaviour => {
         setCheckoutModalIsOpen(false)
     }
 
-    // const handleChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, cartItemId: string) => {
-    //     dispatch(updateCartItemQuantity({
-    //         updatedQuantity: event.target.value,
-    //         cartItemId
-    //     }))
-    // }
-
-    const handleSubmit = () => {
-
-    }
-
     return{
-        // handleChangeQuantity,
-        handleSubmit,
         checkoutModalIsOpen,
         handleOpenCheckout,
         handleCloseCheckout,

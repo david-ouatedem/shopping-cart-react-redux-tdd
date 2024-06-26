@@ -1,6 +1,7 @@
 import {AppDispatch, RootState} from "../../../app/create-store.ts";
 import {CartItemEntity} from "../../../features/cart/model/cart.entity.ts";
 import {
+    clearCartItems,
     removeCartItem,
     selectCartItems,
     selectCartTotalCost,
@@ -13,6 +14,7 @@ export type CartViewModelType = {
     cartItems: CartItemEntity[]
     handleRemoveCartItem: (item: CartItemEntity) => void
     handleChangeQuantity: (updatedQuantity: number, cartItemId: string) => void
+    handleSubmit: () => void
 }
 
 export const createCartViewModel = (
@@ -43,11 +45,17 @@ export const createCartViewModel = (
         }))
     }
 
+    const handleSubmit = () => {
+        dispatch(clearCartItems())
+        window.alert("payment made successfully")
+    }
+
     return{
         total,
         cartTotalCost,
         cartItems,
         handleRemoveCartItem,
-        handleChangeQuantity
+        handleChangeQuantity,
+        handleSubmit
     }
 }
