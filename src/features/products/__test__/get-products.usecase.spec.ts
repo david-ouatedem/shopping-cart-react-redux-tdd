@@ -1,6 +1,5 @@
 import {beforeEach, describe, test} from "vitest";
 import {createProductsFixture, ProductsFixture} from "./products.fixture.ts";
-
 describe("Feature: get all available products", () => {
     let fixture: ProductsFixture;
 
@@ -33,4 +32,5 @@ describe("Feature: get all available products", () => {
             imageURL: "https://live.staticflickr.com/5763/22921682035_334b6161c9_b.jpg"
         })
     })
+
 })

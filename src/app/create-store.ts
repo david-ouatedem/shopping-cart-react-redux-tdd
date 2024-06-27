@@ -1,3 +1,4 @@
+import storage from "redux-persist/lib/storage";
 import {
     Action,
     AsyncThunk,
@@ -10,6 +11,8 @@ import {ProductsGateway} from "../features/products/model/Products.gateway.ts";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 import {FakeProductsGatewayHttp} from "../features/products/infrastructure/fake-products-gateway-http.ts";
 import {rootReducer} from "./root-reducer.ts";
+import {persistReducer, persistStore} from 'redux-persist';
+import {ProductsGatewayHttp} from "../features/products/infrastructure/productsGatewayHttp.ts";
 
 export const EMPTY_ARGS = "EMPTY_ARGS" as const;
 
@@ -17,6 +20,12 @@ export type Dependencies = {
     productsGatewayHttp: ProductsGateway
 }
 
+const persistConfig = {
+    key: "root",
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const createStore = (
     dependencies: Dependencies,
@@ -29,7 +38,8 @@ export const createStore = (
     }
 
     const store = configureStore({
-        reducer: rootReducer,
+        reducer: persistedReducer,
+        devTools: true,
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware({
                 thunk: {
@@ -50,6 +60,10 @@ export const createStore = (
     }
 }
 
+export const appStore = createStore({
+    productsGatewayHttp: new ProductsGatewayHttp()
+})
+export const persist = persistStore(appStore)
 
 export const creatTestStore = ({
                                    productsGatewayHttp = new FakeProductsGatewayHttp()
