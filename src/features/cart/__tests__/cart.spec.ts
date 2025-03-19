@@ -1,7 +1,8 @@
 import {describe, expect, test} from "vitest";
 import {creatTestStore} from "../../../app/create-store.ts";
 import {
-    addCartItem, clearCartItems,
+    addCartItem,
+    clearCartItems,
     removeCartItem,
     selectCartItems,
     selectCartTotalCost,

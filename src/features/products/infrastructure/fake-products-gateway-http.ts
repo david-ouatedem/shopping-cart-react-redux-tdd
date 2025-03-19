@@ -5,5 +5,4 @@ export class FakeProductsGatewayHttp implements ProductsGateway {
     async getAll(): Promise<GetAllProductsResponse> {
         return Promise.resolve(this.returnedResponse)
     }
-
 }

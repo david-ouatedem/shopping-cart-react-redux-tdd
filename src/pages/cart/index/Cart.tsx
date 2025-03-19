@@ -6,7 +6,12 @@ export function Cart() {
         handleOpenCheckout,
         handleCloseCheckout,
         checkoutModalIsOpen,
-        cartViewModel
+        getCartItemTotal,
+        handleRemoveCartItem,
+        cartItems,
+        handleSubmit,
+        handleChangeQuantity,
+        cartTotalCost
     } = useCart()
     return (
         <main className="page">
@@ -21,7 +26,7 @@ export function Cart() {
                 </tr>
                 </thead>
                 <tbody>
-                {cartViewModel.cartItems.map((item) => {
+                {cartItems.map((item) => {
 
                     return (
                         <tr key={item.id}>
@@ -32,13 +37,13 @@ export function Cart() {
                                     className={styles.input}
                                     value={item.quantity}
                                     onChange={(event) =>
-                                        cartViewModel.handleChangeQuantity(+event.target.value, item.id)
+                                        handleChangeQuantity(+event.target.value, item.id)
                                 }
                                 />
                             </td>
-                            <td>${cartViewModel.total(item)}</td>
+                            <td>${getCartItemTotal(item)}</td>
                             <td>
-                                <button onClick={() => cartViewModel.handleRemoveCartItem(item)}
+                                <button onClick={() => handleRemoveCartItem(item)}
                                         aria-label="Remove Magnifying Glass from Shopping Cart">
                                     X
                                 </button>
@@ -51,18 +56,18 @@ export function Cart() {
                 <tr>
                     <td>Total</td>
                     <td></td>
-                    <td className={styles.total}>${cartViewModel.cartTotalCost}</td>
+                    <td className={styles.total}>${cartTotalCost}</td>
                     <td></td>
                 </tr>
                 </tfoot>
             </table>
             <form onSubmit={(event)=>{
                 event.preventDefault()
-                cartViewModel.handleSubmit()
+                handleSubmit()
             }}>
                 <dialog open={checkoutModalIsOpen} id="mypopover">
                     <p>The total cost of your cart amounts to</p>
-                    <p className={styles.total}>${cartViewModel.cartTotalCost}</p>
+                    <p className={styles.total}>${cartTotalCost}</p>
                     <div className={styles.flexCenter}>
                         <button type="button" onClick={handleCloseCheckout}>Cancel</button>
                         <button type="submit">Checkout</button>

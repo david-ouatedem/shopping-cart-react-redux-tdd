@@ -1,21 +1,24 @@
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../../app/create-store.ts";
 import {useState} from "react";
-import {CartViewModelType, createCartViewModel} from "../view-model/cart.viewModel.ts";
+import {CartItemEntity} from "../../../features/cart/model/cart.entity.ts";
+import {
+    clearCartItems,
+    removeCartItem,
+    selectCartItems,
+    selectCartTotalCost,
+    updateCartItemQuantity
+} from "../../../features/cart/slice/cart.slice.ts";
 
-export interface CartBehaviour {
-    checkoutModalIsOpen: boolean
-    handleOpenCheckout: () => void
-    handleCloseCheckout: () => void
-    cartViewModel: CartViewModelType
-}
+export type CartBehaviour = ReturnType<typeof useCart>;
 
 
-export const useCart = (): CartBehaviour => {
+export const useCart = () => {
 
     const dispatch = useDispatch()
 
-    const cartViewModel = useAppSelector(createCartViewModel({dispatch}))
+    const cartItems = useAppSelector(selectCartItems)
+    const cartTotalCost = useAppSelector(selectCartTotalCost)
 
     const [checkoutModalIsOpen, setCheckoutModalIsOpen] = useState(false)
 
@@ -28,10 +31,40 @@ export const useCart = (): CartBehaviour => {
         setCheckoutModalIsOpen(false)
     }
 
+    const getCartItemTotal = (item: CartItemEntity) => {
+        return +(item.quantity * item.productUnitPrice).toFixed(2);
+    }
+
+    const handleRemoveCartItem = (item: CartItemEntity) => {
+        dispatch(removeCartItem(
+            {
+                cartItemId: item.id
+            }
+        ))
+    }
+
+    const handleChangeQuantity = (updatedQuantity: number, cartItemId: string) => {
+        dispatch(updateCartItemQuantity({
+            updatedQuantity: updatedQuantity,
+            cartItemId
+        }))
+    }
+
+    const handleSubmit = () => {
+        dispatch(clearCartItems())
+        window.alert("payment made successfully")
+    }
+
+
     return{
         checkoutModalIsOpen,
         handleOpenCheckout,
         handleCloseCheckout,
-        cartViewModel
+        getCartItemTotal,
+        cartTotalCost,
+        cartItems,
+        handleRemoveCartItem,
+        handleChangeQuantity,
+        handleSubmit
     }
 }
