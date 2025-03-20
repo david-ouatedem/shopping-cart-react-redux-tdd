@@ -27,7 +27,6 @@ export function Cart() {
                 </thead>
                 <tbody>
                 {cartItems.map((item) => {
-
                     return (
                         <tr key={item.id}>
                             <td>{item.name}</td>
@@ -61,10 +60,7 @@ export function Cart() {
                 </tr>
                 </tfoot>
             </table>
-            <form onSubmit={(event)=>{
-                event.preventDefault()
-                handleSubmit()
-            }}>
+            <form onSubmit={handleSubmit}>
                 <dialog open={checkoutModalIsOpen} id="mypopover">
                     <p>The total cost of your cart amounts to</p>
                     <p className={styles.total}>${cartTotalCost}</p>

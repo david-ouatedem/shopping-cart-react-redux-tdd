@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../../app/create-store.ts";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import {CartItemEntity} from "../../../features/cart/model/cart.entity.ts";
 import {
     clearCartItems,
@@ -50,7 +50,8 @@ export const useCart = () => {
         }))
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
         dispatch(clearCartItems())
         window.alert("payment made successfully")
     }
